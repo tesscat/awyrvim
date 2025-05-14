@@ -10,3 +10,5 @@ vim.g.maplocalleader = AwyrVim.localleader
 require("awyrvim.bootstrap")
 
 pcall(vim.cmd("colorscheme " .. AwyrVim.colourscheme))
+
+require("awyrvim.keybinds")

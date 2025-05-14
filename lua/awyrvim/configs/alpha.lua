@@ -114,14 +114,14 @@ local footer = {
 
 local buttons = {
 	type = "group",
-	val = {
+	val = { --[[
 		button("e", "  New file", "<cmd>ene <CR>"),
 		button(AwyrVim.leader .. " f f", "󰈞  Find file"),
 		button(AwyrVim.leader .. " f h", "󰊄  Recently opened files"),
 		button(AwyrVim.leader .. " f r", "  Frecency/MRU"),
 		button(AwyrVim.leader .. " f g", "󰈬  Find word"),
 		button(AwyrVim.leader .. " f m", "  Jump to bookmarks"),
-		button(AwyrVim.leader .. " s l", "  open last session"),
+		button(AwyrVim.leader .. " s l", "  open last session"), --]]
 	},
 	opts = {
 		spacing = 1,

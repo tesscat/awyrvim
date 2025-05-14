@@ -1,9 +1,24 @@
 -- TODO: if i use opts = AwyrVim.configs.whatever, does this resolve at table initialisation (bad!) or when LazySync (better)
 -- and then figure out if I can actually use opts
+
+local function get_config_for_plugin(plugin)
+	return function()
+		local cfg = AwyrVim.custom.configs[plugin]
+		local cfg_type = type(cfg)
+		if cfg_type == "table" then
+			return cfg
+		end
+		local default = require("awyrvim.configs." .. plugin)
+
+		return (cfg and cfg(default)) or default
+	end
+end
+
 return {
 	{ "folke/lazy.nvim", tag = "stable" },
-	{ "neovim/nvim-lspconfig", lazy = true },
-	{ "mason-org/mason.nvim", lazy = false },
+	{ "neovim/nvim-lspconfig", lazy = false },
+	{ "lewis6991/hover.nvim", lazy = true, opts = get_config_for_plugin("hover") },
+	{ "mason-org/mason.nvim", lazy = false, opts = get_config_for_plugin("mason") },
 	{
 		"mason-org/mason-lspconfig.nvim",
 		lazy = true,
@@ -16,9 +31,7 @@ return {
 		lazy = true,
 		cmd = "Telescope",
 		dependencies = { "telescope-fzf-native.nvim" },
-		config = function()
-			require("telescope").setup(AwyrVim.configs.telescope())
-		end,
+		opts = get_config_for_plugin("telescope"),
 	},
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
@@ -27,9 +40,7 @@ return {
 	},
 	{
 		"hrsh7th/nvim-cmp",
-		config = function()
-			require("cmp").setup(AwyrVim.configs.cmp())
-		end,
+		opts = get_config_for_plugin("cmp"),
 		event = { "InsertEnter", "CmdlineEnter" },
 		lazy = true,
 		dependencies = { "cmp-nvim-lsp", "cmp_luasnip", "cmp-buffer", "cmp-path" },
@@ -65,9 +76,7 @@ return {
 			"TSInstallFromGrammar",
 		},
 		event = "User FileOpened",
-		config = function()
-			require("nvim-treesitter.configs").setup(AwyrVim.configs.treesitter())
-		end,
+		opts = get_config_for_plugin("treesitter"),
 	},
 	{ "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
@@ -77,9 +86,7 @@ return {
 		dependencies = {
 			"nvim-web-devicons",
 		},
-		config = function()
-			require("nvim-tree").setup(AwyrVim.configs.nvimtree())
-		end,
+		opts = get_config_for_plugin("nvimtree"),
 		cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus", "NvimTreeFindFileToggle" },
 		event = "User DirOpened",
 	},
@@ -90,58 +97,45 @@ return {
 		lazy = true,
 		event = "VeryLazy",
 		cmd = "WhichKey",
-		config = function()
-			require("which-key").setup(AwyrVim.configs.whichkey())
-		end,
+		opts = get_config_for_plugin("whichkey"),
 	},
 	{
 		"numToStr/Comment.nvim",
 		lazy = true,
 		event = "User FileOpened",
-		config = function()
-			require("Comment").setup(AwyrVim.configs.comment())
-		end,
+		opts = get_config_for_plugin("comment"),
 	},
 	{
 		"nvim-lualine/lualine.nvim",
 		lazy = true,
 		event = "VimEnter",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("lualine").setup(AwyrVim.configs.lualine())
-		end,
+		opts = get_config_for_plugin("lualine"),
 	},
 	-- TODO: maybe nvim-navbuddy?
 	{
 		"SmiteshP/nvim-navic",
 		lazy = true,
 		event = "User FileOpened",
-		config = function()
-			require("nvim-navic").setup(AwyrVim.configs.navic())
-		end,
+		opts = get_config_for_plugin("navic"),
 	},
 	{
 		"akinsho/bufferline.nvim",
 		lazy = true,
+		event = "User FileOpened",
 		dependencies = "nvim-tree/nvim-web-devicons",
-		config = function()
-			require("bufferline").setup(AwyrVim.configs.bufferline())
-		end,
+		opts = get_config_for_plugin("bufferline"),
 	},
 	{
 		"mfussenegger/nvim-dap",
 		lazy = true,
-		config = function()
-			require("dap").setup(AwyrVim.configs.dap())
-		end,
+		opts = get_config_for_plugin("dap"),
 	},
 	{
 		"rcarriga/nvim-dap-ui",
 		lazy = true,
 		dependencies = { "nvim-dap", "nvim-nio" },
-		config = function()
-			require("dapui").setup(AwyrVim.configs.dapui())
-		end,
+		opts = get_config_for_plugin("dapui"),
 	},
 	{ "nvim-neotest/nvim-nio", lazy = true },
 	{ "nvim-lua/plenary.nvim", lazy = true },
@@ -154,9 +148,7 @@ return {
 			"nvim-treesitter",
 			"FixCursorHold.nvim",
 		},
-		config = function()
-			require("neotest").setup(AwyrVim.configs.neotest())
-		end,
+		opts = get_config_for_plugin("neotest"),
 	},
 	{
 		"akinsho/toggleterm.nvim",
@@ -169,24 +161,18 @@ return {
 			"ToggleTermSendVisualLines",
 			"ToggleTermSendVisualSelection",
 		},
-		config = function()
-			require("toggleterm").setup(AwyrVim.configs.toggleterm())
-		end,
+		opts = get_config_for_plugin("toggleterm"),
 	},
 	{
 		"RRethy/vim-illuminate",
 		lazy = true,
-		config = function()
-			require("illuminate").setup(AwyrVim.configs.illuminate())
-		end,
+		opts = get_config_for_plugin("illuminate"),
 		event = "User FileOpened",
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		lazy = true,
-		config = function()
-			require("ibl").setup(AwyrVim.configs.indentblankline())
-		end,
+		opts = get_config_for_plugin("indentblankline"),
 		event = "User FileOpened",
 	},
 	{
@@ -199,9 +185,7 @@ return {
 	{
 		"goolord/alpha-nvim",
 		lazy = true,
-		config = function()
-			require("alpha").setup(AwyrVim.configs.alpha())
-		end,
+		opts = get_config_for_plugin("alpha"),
 		event = "VimEnter",
 	},
 }
