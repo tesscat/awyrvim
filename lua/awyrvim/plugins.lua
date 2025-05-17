@@ -25,6 +25,7 @@ return {
 		cmd = { "LspInstall", "LspUninstall" },
 		dependencies = { "mason-org/mason.nvim" },
 	},
+	{ "stevearc/conform.nvim", lazy = true, event = { "BufWritePre" }, cmd = { "ConformInfo" } },
 	{ "Tastyep/structlog.nvim", lazy = true },
 	{
 		"nvim-telescope/telescope.nvim",
@@ -180,6 +181,13 @@ return {
 		name = "dracula-colourscheme",
 		enabled = function()
 			return AwyrVim.colourscheme == "dracula"
+		end,
+	},
+	{
+		"catppuccin/nvim",
+		name = "catppuccin-colourscheme",
+		enabled = function()
+			return AwyrVim.colourscheme == "catppuccin"
 		end,
 	},
 	{

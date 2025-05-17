@@ -6,6 +6,8 @@ require("custom")
 
 vim.g.mapleader = AwyrVim.leader
 vim.g.maplocalleader = AwyrVim.localleader
+vim.opt.fillchars = { eob = " " }
+vim.opt.number = true
 
 require("awyrvim.bootstrap")
 

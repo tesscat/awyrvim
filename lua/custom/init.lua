@@ -8,3 +8,5 @@ end
 
 -- vim.lsp.config("lua_ls", {})
 vim.lsp.enable("lua_ls")
+vim.lsp.enable("autotools_ls")
+vim.lsp.enable("clangd")

@@ -7,7 +7,7 @@ end
 return {
 	leader = " ",
 	localleader = "\\",
-	colourscheme = "dracula",
+	colourscheme = "catppuccin",
 	builtin = {
 		plugins = require("awyrvim.plugins"),
 		keybinds = {
@@ -39,6 +39,7 @@ return {
 				-- Move current line / block with Alt-j/k a la vscode.
 				["<A-j>"] = ":m .+1<CR>==",
 				["<A-k>"] = ":m .-2<CR>==",
+				["<leader>f"] = function() require("conform").format({async = true}) end,
 			},
 
 			term_mode = {
