@@ -122,8 +122,8 @@ return {
 	},
 	{
 		"akinsho/bufferline.nvim",
-		lazy = true,
-		event = "User FileOpened",
+		lazy = false,
+		enabled = false,
 		dependencies = "nvim-tree/nvim-web-devicons",
 		opts = get_config_for_plugin("bufferline"),
 	},

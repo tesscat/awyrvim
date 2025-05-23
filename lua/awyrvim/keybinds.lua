@@ -11,27 +11,32 @@ local mode_adapters = {
 
 local default_opts = { silent = true }
 
-local keybinds = vim.tbl_deep_extend("force", AwyrVim.builtin.keybinds, AwyrVim.custom.keybinds)
+local function merge_key_arrays(a1, a2)
+	local out = {}
+	for idx, v in ipairs(a1) do
+		out[v[1]] = v
+	end
+	for idx, v in ipairs(a2) do
+		out[v[1]] = v
+	end
+	local arr = {}
+	for _, v in pairs(out) do
+		table.insert(arr, v)
+	end
+	return arr
+end
+
+local keybinds = {}
+
+for k, v in pairs(AwyrVim.builtin.keybinds) do
+	keybinds[k] = merge_key_arrays(v, AwyrVim.custom.keybinds[k])
+end
+
+local wk = require("which-key")
 
 for modekey, v in pairs(keybinds) do
-	for bindkey, body in pairs(v) do
-		local key
-		local opts
-		local bind
-		if type(bindkey) == "table" then
-			bind = bindkey[0]
-		else
-			bind = bindkey
-		end
-		if type(body) == "table" then
-			key = body[1]
-			opts = body[2]
-		else
-			key = body
-			opts = default_opts
-		end
-		vim.keymap.set(mode_adapters[modekey], bind, key, opts)
-	end
+	v["mode"] = mode_adapters[modekey]
+	wk.add(v)
 end
 
 return M
