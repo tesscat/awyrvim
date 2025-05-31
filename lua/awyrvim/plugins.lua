@@ -16,6 +16,19 @@ end
 
 return {
 	{ "folke/lazy.nvim", tag = "stable" },
+	{ "nvim-telescope/telescope-symbols.nvim" },
+	{ "nvim-telescope/telescope-ui-select.nvim" },
+	{
+		"nvim-telescope/telescope.nvim",
+		lazy = false,
+		cmd = "Telescope",
+		dependencies = { "telescope-fzf-native.nvim", "telescope-ui-select.nvim" },
+		config = function()
+			local t = require("telescope")
+			t.setup(get_config_for_plugin("telescope")())
+			t.load_extension("ui-select")
+		end,
+	},
 	{ "neovim/nvim-lspconfig", lazy = false },
 	{ "lewis6991/hover.nvim", lazy = true, opts = get_config_for_plugin("hover") },
 	{ "mason-org/mason.nvim", lazy = false, opts = get_config_for_plugin("mason") },
@@ -27,13 +40,6 @@ return {
 	},
 	{ "stevearc/conform.nvim", lazy = true, event = { "BufWritePre" }, cmd = { "ConformInfo" } },
 	{ "Tastyep/structlog.nvim", lazy = true },
-	{
-		"nvim-telescope/telescope.nvim",
-		lazy = true,
-		cmd = "Telescope",
-		dependencies = { "telescope-fzf-native.nvim" },
-		opts = get_config_for_plugin("telescope"),
-	},
 	{
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "cmake -S. -Bbuild -DCMAKE_VERSION_POLICY_MINIMUM=3.5 -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
@@ -80,7 +86,7 @@ return {
 		opts = get_config_for_plugin("treesitter"),
 	},
 	{ "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
-	{ "nvim-tree/nvim-web-devicons", lazy = true },
+	{ "nvim-tree/nvim-web-devicons" },
 	{
 		"nvim-tree/nvim-tree.lua",
 		lazy = true,

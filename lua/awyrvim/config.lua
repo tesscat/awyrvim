@@ -47,11 +47,34 @@ return {
 						require("conform").format({ async = true })
 					end,
 					desc = "Run conform.nvim formatting",
-					group = "Language",
 				},
-				{ "<leader>t", group = "Telescope" },
-				{ "<leader>tb", ":Telescope buffers<CR>", desc = "Telescope buffers" },
+				{ "<leader>f", group = "Telescope" },
+				{ "<leader>fp", ":Telescope pickers<CR>", desc = "Find finders" },
+				{ "<leader>fb", ":Telescope buffers<CR>", desc = "Find open buffer" },
+				{ "<leader>ff", ":Telescope find_files<CR>", desc = "Find file" },
+				{ "<leader>fe", ":Telescope symbols<CR>", desc = "Find emoji" },
+				{ "<leader>fw", ":Telescope live_grep<CR>", desc = "Find words" },
+				{ "<leader>fd", ":Telescope diagnostics<CR>", desc = "Find diagnostics" },
+				{ "<leader>fl", group = "Telescope language" },
+				{ "<leader>fls", ":Telescope lsp_workspace_symbols<CR>", desc = "Find symbols" },
+				{ "<leader>flq", ":Telescope quickfix<CR>", desc = "Find quickfixes" },
+				{ "<leader>flr", ":Telescope lsp_references<CR>", desc = "Find references" },
+				{ "<leader>fli", ":Telescope lsp_implementations<CR>", desc = "Find implementations" },
+				{ "<leader>flo", ":Telescope lsp_outgoing_calls<CR>", desc = "Find outgoing calls" },
+				{ "<leader>fld", ":Telescope lsp_definitions<CR>", desc = "Find definitions" },
+				{ "<leader>fg", group = "Telescope git" },
+				{ "<leader>fgc", ":Telescope git_commits<CR>", desc = "Find git commits" },
+				{ "<leader>fgb", ":Telescope git_branches<CR>", desc = "Find git branches" },
+				{ "<leader>fgs", ":Telescope git_status<CR>", desc = "Find changed files" },
+				{
+					"<leader>fgr",
+					":Telescope git_bcommits_range<CR>",
+					desc = "Find commits affecting a range of lines",
+				},
+				{ "<leader>fgt", ":Telescope git_bcommits<CR>", desc = "Find commits affecting this buffer" },
+
 				{ "<leader>l", group = "Language" },
+
 				{
 					"<leader>lr",
 					function()

@@ -3,7 +3,7 @@ require("custom.keys")
 
 -- vim.list_extend(AwyrVim.configs.cmp().sources, { { name = "lazydev" } })
 AwyrVim.custom.configs.cmp = function(old)
-	vim.list_extend(old.sources, { { name = "lazydev" } })
+	vim.list_extend(old.sources, { { name = "lazydev", group_index = 0 } })
 end
 
 -- vim.lsp.config("lua_ls", {})
