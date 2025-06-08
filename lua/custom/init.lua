@@ -10,3 +10,11 @@ end
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("autotools_ls")
 vim.lsp.enable("clangd")
+
+vim.lsp.config("hls", {
+	settings = {
+		haskell = { plugin = { ["ghcide-completions"] = { config = { autoExtendOn = true } } } },
+	},
+})
+
+vim.lsp.enable("hls")
